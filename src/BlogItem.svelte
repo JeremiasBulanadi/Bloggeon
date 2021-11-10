@@ -12,10 +12,11 @@
         dispatch('toggle', {
             id,
             newStatus
-        })
+        });
     }
 
     export let id;
+    export let title;
     export let text;
     export let complete;
 </script>
@@ -29,13 +30,8 @@
 
 <li>
 
-    {#if complete}
-        <span class="is-complete">{ text }</span>
-        <button on:click={toggleStatus}> ✔️ </button>
-    {:else}
-        <span>{ text }</span>
-        <button on:click={toggleStatus}> ❌ </button>
-    {/if}
+    <h5>{ title }</h5>
+    <h6>{ text }</h6>
     
     <button on:click={remove}> 🗑 </button>
     

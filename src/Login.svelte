@@ -20,7 +20,7 @@
         <button on:click={ () => auth.signOut() }>Logout</button>
         <hr>
         
-        {(console.log(user.uid))}
+        {(console.log($user.uid))}
         <Blogs uid={$user.uid}/>
         
     {:else}
