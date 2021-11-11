@@ -42,11 +42,11 @@
                 <div class="card-content">
                   <div class="content">
                     <h5 class="title is-5">Title</h5>
-                    <input class="input is-normal" type="text" placeholder="Something attention grabbing..." bind:value={titleText}>
+                    <input class="input is-normal" type="text" placeholder="Something attention grabbing..." maxlength="125" bind:value={titleText}>
                     <br>
                     <br>
                     <h5 class="title is-5">Content</h5>
-                    <textarea class="textarea" placeholder="e.g. Hello world" bind:value={contentText}></textarea>
+                    <textarea class="textarea" placeholder="e.g. Hello world" maxlength="500" bind:value={contentText}></textarea>
                   </div>
                 </div>
                 <footer class="card-footer">

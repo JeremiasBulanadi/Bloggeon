@@ -95,6 +95,6 @@
 </ul>
 
 
-<button on:click={() => {modalMode = 'add'; modalIsActive = true; console.log(modalIsActive);}}>
-    Add Task
+<button class="button is-info" on:click={() => {modalMode = 'add'; modalIsActive = true; console.log(modalIsActive);}}>
+    <i class="fas fa-plus"></i><p>&nbsp New Blog</p>
 </button>
