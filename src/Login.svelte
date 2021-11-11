@@ -37,7 +37,7 @@
         
     {:else}
         {#if ready}
-             <h1 class="title is-1" transition:fade="{{ delay: 500, duration: 1500 }}">Your own notetaking repository...</h1>
+             <h1 class="title is-1" transition:fade="{{ delay: 300, duration: 1000 }}">Your own notetaking repository...</h1>
         {/if}
          <button class="button is-primary" on:click={login}>
             <strong>Sign In</strong>
