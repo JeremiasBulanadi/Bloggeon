@@ -15,47 +15,65 @@
     let text = 'some task'
 
     // Modals shown
-    let addModal = false;
-    let editModal = false;
+    let modalMode = 'add';
+    let modalIsActive = false;
+    let idToBeEdited;
 
-    // Query requires an index
-    const collectionRef = collection(db, 'todos');
-
-    const docQuery = query(collectionRef, where('uid', '==', uid), orderBy('created'));
-    
-    const todos = collectionData(docQuery, {idField:'id'}).pipe(startWith([]));
-
-    async function addBlog(titleText, contentText) {
-        let timestamp = Date.now();
-        await addDoc(collectionRef, { uid, titleText, contentText, created: timestamp})
+    function toggleModal() {
+        modalIsActive = !modalIsActive;
     }
 
-    async function updateBlog(event) {
-        const { id , titleText, contentText } = event.detail;
+    // Query requires an index
+    const collectionRef = collection(db, 'blogs');
+    const docQuery = query(collectionRef, where('uid', '==', uid), orderBy('created'));
+    const blogs = collectionData(docQuery, {idField:'id'}).pipe(startWith([]));
+
+    async function addBlog(event) {
+        const { titleText, contentText } = event.detail;
+        let timestamp = Date.now();
+        await addDoc(collectionRef, {
+            uid,
+            title: titleText,
+            content: contentText,
+            created: timestamp
+        })
+    }
+
+    function editModal(event) {
+        const { id } = event.detail;
+        idToBeEdited = id;
+        modalMode = 'edit';
+        toggleModal();
+    }
+
+    async function editBlog(event) {
+        const { titleText, contentText } = event.detail;
         const timestamp = Date.now();
-        await updateDoc(doc(db,'blogs', id), {
+        console.log(`${idToBeEdited}\n${titleText}\n${contentText}\n${timestamp}`);
+        await updateDoc(doc(db,'blogs', idToBeEdited), {
             title: titleText,
             content: contentText,
             edited: timestamp
         });
     }
 
-    async function removeItem(event) {
+    async function removeBlog(event) {
         const { id } = event.detail;
         console.log(`id of gonna be deleted: ${id}`);
-        await deleteDoc(doc(db,'todos', id));
+        await deleteDoc(doc(db,'blogs', id));
     }
 
-    function modalFunc(event) {
-        const { modalMode, titleText, contentText } = event.detail;
-        if (modalMode === 'add') {
-            addBlog(titleText, contentText);
-        } else if (modalMode === 'edit') {
-            editBlog(titleText, contentText);
-        } else {
-            console.log("Something went horribly wrong...");
-        }
-    }
+    // function modalFunc(event) {
+    //     const { modalMode, titleText, contentText } = event.detail;
+    //     console.log("id is " + titleText);
+    //     if (modalMode === 'add') {
+    //         addBlog(titleText, contentText);
+    //     } else if (modalMode === 'edit') {
+    //         editBlog(id ,titleText, contentText);
+    //     } else {
+    //         console.log("Something went horribly wrong...");
+    //     }
+    // }
 
 </script>
 
@@ -64,46 +82,19 @@
 
 </style>
 
-{(console.log($todos))}
 
-
-    <Modal isActive={true} modalMode={"add"} on:modalFunc={modalFunc}/>
-
-    <div class="modal {addModal === true ? 'is-active' : ''}">
-        <div class="modal-background"></div>
-            <div class="modal-content">
-                <div class="card">
-                    <div class="card-content">
-                      <div class="content">
-                        Lorem ipsum leo risus, porta ac consectetur ac, vestibulum at eros. Donec id elit non mi porta gravida at eget metus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Cras mattis consectetur purus sit amet fermentum.
-                      </div>
-                    </div>
-                 </div>
-            </div>
-        <button class="modal-close is-large" aria-label="close" on:click={() => addModal = false}></button>
-    </div>
-
-
-    <div class="modal {editModal === true ? 'is-active' : ''}">
-        <div class="modal-background"></div>
-            <div class="modal-content">
-                <!-- Any other Bulma elements you want -->
-            </div>
-        <button class="modal-close is-large" aria-label="close" on:click={() => editModal = false}></button>
-    </div>
-
-
-{#each $todos as todo}
-    <BlogItem {...todo} on:remove={removeItem} on:toggle={updateStatus}/>
-    <br/>
-{/each}
+{#if modalIsActive}
+    <Modal isActive={modalIsActive} modalMode={modalMode} on:modalFunc={modalMode == 'add' ? addBlog : editBlog } on:toggle={toggleModal}/>
+{/if}
 
 <ul>
-    
+    {#each $blogs as blog}
+        <BlogItem {...blog} on:remove={removeBlog} on:edit={editModal}/>
+        <br/>
+    {/each}    
 </ul>
 
-<input bind:value={text}>
 
-<button on:click={addBlog}>
+<button on:click={() => {modalMode = 'add'; modalIsActive = true; console.log(modalIsActive);}}>
     Add Task
 </button>

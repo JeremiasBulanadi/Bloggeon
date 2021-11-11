@@ -1,6 +1,4 @@
 <script>
-
-    export let isActive = false;
     export let modalMode; // Should only either be 'add' or 'edit'
 
     export let titleText = '';
@@ -11,8 +9,12 @@
     const dispatch = createEventDispatcher();
 
     function modalFunc() {
-        dispatch('modalFunc', { modalMode, titleText, contentText });
-        isActive = !isActive;
+        dispatch('modalFunc', { titleText, contentText });
+        toggle();
+    }
+
+    function toggle() {
+        dispatch('toggle');
     }
 
 </script>
@@ -22,7 +24,7 @@
     
 </style>
 
-<div class="modal {isActive ? 'is-active' : ''}">
+<div class="modal is-active">
     <div class="modal-background"></div>
         <div class="modal-content">
 
@@ -31,7 +33,7 @@
                   <p class="card-header-title">
                     {modalMode === "add" ? "Add" : "Edit" } Blog...
                   </p>
-                  <button class="card-header-icon" aria-label="more options" on:click={() => isActive = !isActive}>
+                  <button class="card-header-icon" aria-label="more options" on:click={toggle}>
                     <span class="icon">
                         <i class="fas fa-times"></i>
                     </span>
@@ -49,11 +51,11 @@
                 </div>
                 <footer class="card-footer">
                   <a href="#" class="card-footer-item" on:click={modalFunc}>Save</a>
-                  <a href="#" class="card-footer-item" on:click={() => isActive = !isActive}>Cancel</a>
+                  <a href="#" class="card-footer-item" on:click={toggle}>Cancel</a>
                 </footer>
             </div>
 
         </div>
-    <button class="modal-close is-large" aria-label="close" on:click={() => isActive = !isActive}></button>
+    <button class="modal-close is-large" aria-label="close" on:click={toggle}></button>
 </div>
 

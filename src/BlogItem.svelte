@@ -7,32 +7,29 @@
         dispatch('remove', { id });
     }
     
-    function toggleStatus() {
-        let newStatus = !complete;
-        dispatch('toggle', {
-            id,
-            newStatus
-        });
+    function edit() {
+        dispatch('edit', { id });
     }
 
     export let id;
     export let title;
-    export let text;
-    export let complete;
+    export let content;
+    export let created;
+    export let edited;
 </script>
 
 <style>
-    .is-complete {
-        text-decoration: line-through;
-        color: green;
-    }
+
 </style>
 
 <li>
 
     <h5>{ title }</h5>
-    <h6>{ text }</h6>
+    <h6>{ content }</h6>
+    <h6>{ created }</h6>
+    <h6>{ edited ?? '' }</h6>
     
+    <button on:click={edit}> ✏️ </button>
     <button on:click={remove}> 🗑 </button>
     
 </li>

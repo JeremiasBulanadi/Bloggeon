@@ -2,6 +2,7 @@
     export let displayName;
     export let photoURL;
     export let uid;
+    export let email;
 </script>
 
 <h3>
@@ -11,5 +12,5 @@
 <img src={ photoURL } width="100" alt="user avatar">
 
 <p>
-    Your userID is { uid }
+    { email }
 </p>
