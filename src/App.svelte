@@ -17,7 +17,7 @@
 
 <style>
 	h1 {
-		color: purple;
+		color: blueviolet;
 	}
 
 	main {
