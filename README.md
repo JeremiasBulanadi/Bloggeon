@@ -13,8 +13,8 @@ A barebones blogging webpage made with the use of Svelte, Bulma, and Firebase
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Bloggeon Screen Shot][product-screenshot]](./images/screenshot1.png)
-[![Bloggeon Screen Shot][product-screenshot]](./images/screenshot2.png)
+[![Bloggeon Screen Shot 1][product-screenshot]](/images/screenshot.png)
+[![Bloggeon Screen Shot 2][product-screenshot]](/images/screenshot2.png)
 
 Here's a blank template to get started: To avoid retyping too much info. Do a search and replace with your text editor for the following: `github_username`, `repo_name`, `twitter_handle`, `linkedin_username`, `email`, `email_client`, `project_title`, `project_description`
 
